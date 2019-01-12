@@ -7,28 +7,27 @@ const newsRepo = new NewsRepository();
 
 /* GET news by id. */
 router.get('/:id', function (req, res, next) {
-    console.log('id', req.params.id, newsRepo.getNews(req.params.id))
-    res.send(JSON.stringify(newsRepo.getNews(req.params.id)));
+    res.json(newsRepo.getById(req.params.id));
 });
 
 /* GET news listing. */
 router.get('/', function (req, res, next) {
-    res.send(JSON.stringify(newsRepo.list()));
+    res.json(newsRepo.getAll());
 });
 
 /* POST news. */
 router.post('/', function (req, res, next) {
-    res.send('respond with a resource');
+    res.json(newsRepo.post(req.body));
 });
 
 /* PUT news by id. */
 router.put('/:id', function (req, res, next) {
-    res.send('respond with a resource');
+    res.json(newsRepo.put(req.params.id, req.body));
 });
 
 /* DELETE news by id. */
 router.delete('/:id', function (req, res, next) {
-    res.send('respond with a resource');
+    res.json(newsRepo.delete(req.params.id));
 });
 
 module.exports = router;
