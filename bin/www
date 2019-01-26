@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('fc-newsapi-node-server:server');
 var http = require('http');
+var mongoose = require('mongoose');
 
 /**
  * Get port from environment and store in Express.
@@ -25,9 +26,13 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+connectDb()
+.then(() => {
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+})
+.catch(console.log);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -86,5 +91,9 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
+}
+
+function connectDb() {
+  return mongoose.connect('mongodb://localhost:27017/frontcamp', {useNewUrlParser: true});
 }

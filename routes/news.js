@@ -1,33 +1,19 @@
 // import { NewsRepository } from "../repository/news-repository";
 const express = require('express');
 const router = express.Router();
-const { NewsRepository } = require('../repository/news-repository');
-
-const newsRepo = new NewsRepository();
+const { NewsController } = require('../controllers/news-controller');
+const newsController = new NewsController();
 
 /* GET news by id. */
-router.get('/:id', function (req, res, next) {
-    res.json(newsRepo.getById(req.params.id));
-});
+router.get('/:id', newsController.getById);
 
 /* GET news listing. */
-router.get('/', function (req, res, next) {
-    res.json(newsRepo.getAll());
-});
+router.get('/', newsController.getAll);
 
 /* POST news. */
-router.post('/', function (req, res, next) {
-    res.json(newsRepo.post(req.body));
-});
-
-/* PUT news by id. */
-router.put('/:id', function (req, res, next) {
-    res.json(newsRepo.put(req.params.id, req.body));
-});
+router.post('/', newsController.post);
 
 /* DELETE news by id. */
-router.delete('/:id', function (req, res, next) {
-    res.json(newsRepo.delete(req.params.id));
-});
+router.delete('/:id', newsController.delete);
 
 module.exports = router;
