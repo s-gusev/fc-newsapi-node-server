@@ -1,16 +1,15 @@
-'use strict';
-
-/*!
- * Module dependencies.
- */
-
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
-/**
- * Expose
- */
+// todo: move to config
+const fbSettings = {
+    clientID: 238496927059491,
+    clientSecret: 'bdff05dbbcb8a392f1726131b7d6f10c',
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    profileFields: ['id', 'displayName']
+}
 
 module.exports = function (passport) {
     // serialize sessions
@@ -40,4 +39,30 @@ module.exports = function (passport) {
             });
         }
     ));
+
+    passport.use(new FacebookStrategy(fbSettings, function (accessToken, refreshToken, profile, done) {
+        const options = {
+            criteria: { facebookId: profile.id },
+            select: 'username hashed_password salt'
+        };
+
+        User.load(options, function (err, user) {
+            if (err) return done(err);
+            if (!user) {
+                // todo: profile.displayName is not unique it is better to re-work auth to use email
+                user = new User({ username: profile.displayName, password: "somedefaultpass!!!", facebookId: profile.id });
+                user.save()
+                    .then(user => {
+                        return done(null, user);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        return done(new Error('Error authenticating via Facebook, please try again later or contact administrator'));
+                    });
+            } else {
+                return done(null, user);
+            }
+        });
+    }));
+
 };

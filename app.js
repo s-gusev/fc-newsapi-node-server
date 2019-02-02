@@ -11,10 +11,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var rfs = require('rotating-file-stream');
 
-var indexRouter = require('./routes/index');
-var newsRouter = require('./routes/news');
-var usersRouter = require('./routes/users');
-
 // create a rotating write stream
 var accessLogStream = rfs('access.log', {
   interval: '1d', // rotate daily
@@ -56,9 +52,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', indexRouter);
-app.use('/news', newsRouter);
-app.use('/users', usersRouter);
+app.use('/', require('./routes/index'));
+app.use('/news', require('./routes/news'));
+app.use('/users', require('./routes/users'));
+app.use('/auth', require('./routes/auth'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

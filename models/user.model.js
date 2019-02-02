@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Password cannot be blank'],
   },
   salt: { type: String, default: '' },
+  facebookId: { type: Number },
 });
 
 UserSchema

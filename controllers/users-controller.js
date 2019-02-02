@@ -23,12 +23,16 @@ class UsersController {
         user.save()
             .then(user => {
                 req.logIn(user, err => {
-                    if (err) req.flash('info', 'Sorry! We are not able to log you in!');
+                    if (err) {
+                        console.log(err);
+                        req.flash('error', 'Error authenticating user, please try again later or contact administrator');
+                        return res.redirect('/users/login');
+                    }
                     return res.redirect('/');
                 })
             })
             .catch((err) => {
-               res.render('users/signup', {
+                res.render('users/signup', {
                     title: 'Sign up',
                     errmsg: err.errmsg,
                     user

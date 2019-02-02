@@ -1,6 +1,12 @@
 extends ../layout
 
 block auth
+  a(href="/auth/facebook") Login Using Facebook
+  br
+  br
+  | Or enter your email and pass
+  br
+  br
   form(action="/users/login", method="post", role="form")
     input#email(type="text", placeholder="Username", name="username")
 
@@ -15,6 +21,3 @@ block auth
     br
 
     a(href="/users/signup") Sign up
-
-    p= message
-
