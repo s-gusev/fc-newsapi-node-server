@@ -1,0 +1,1 @@
+"c:\Program Files\MongoDB\Server\4.0\bin\mongoimport.exe" --db frontcamp --collection news --drop data\news.json

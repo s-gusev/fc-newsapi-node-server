@@ -4,7 +4,12 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./app/bin/www",
-    "start-mongo": "c:/\"Program Files\"/MongoDB/Server/4.0/bin/mongod.exe --dbpath ./output-data/db/"
+    "import-data": "import.cmd",
+    "start-db-server": "npm run recreateDB && npm run mongo-server",
+    "mongo-server": "c:/\"Program Files\"/MongoDB/Server/4.0/bin/mongod.exe --dbpath ./output-data/db/",
+    "recreateDB": "npm run remove-db-folder && npm run create-db-folder",
+    "create-db-folder": "mkdir output-data\\db",
+    "remove-db-folder": "rmdir /S /Q output-data"
   },
   "dependencies": {
     "connect-flash": "^0.1.1",

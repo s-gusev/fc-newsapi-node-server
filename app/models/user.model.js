@@ -4,15 +4,23 @@ const crypto = require('crypto');
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, 'Username is required'],
-    unique: [true, 'Username is already in use'],
+    required: 'Username is required',
+    unique: true,
   },
   hashed_password: {
     type: String,
-    required: [true, 'Password cannot be blank'],
+    required: 'Password cannot be blank',
   },
   salt: { type: String, default: '' },
   facebookId: { type: Number },
+});
+
+UserSchema.post('save', function(error, doc, next) {
+  if (error.name === 'MongoError' && error.code === 11000) {
+    next(new Error('Username is already in use'));
+  } else {
+    next(error);
+  }
 });
 
 UserSchema

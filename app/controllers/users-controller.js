@@ -19,7 +19,6 @@ class UsersController {
 
     register(req, res, next) {
         const user = new User(req.body);
-        // user.provider = 'local';
         user.save()
             .then(user => {
                 req.logIn(user, err => {
@@ -34,7 +33,7 @@ class UsersController {
             .catch((err) => {
                 res.render('users/signup', {
                     title: 'Sign up',
-                    errmsg: err.errmsg,
+                    errmsg: err.message || err.errmsg,
                     user
                 });
             });
