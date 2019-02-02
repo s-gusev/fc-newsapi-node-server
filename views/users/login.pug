@@ -1,0 +1,20 @@
+extends ../layout
+
+block auth
+  form(action="/users/login", method="post", role="form")
+    input#email(type="text", placeholder="Username", name="username")
+
+    br
+    input#password(type="password", placeholder="Password", name="password")
+
+    br
+    button(type='submit') Log in
+    br
+    if errmsg && errmsg.length
+      p.error= errmsg
+    br
+
+    a(href="/users/signup") Sign up
+
+    p= message
+

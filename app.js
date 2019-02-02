@@ -1,12 +1,19 @@
+require('./models/user.model');
+
 var createError = require('http-errors');
 var express = require('express');
+var session = require('express-session');
+var passport = require('passport');
 var path = require('path');
+var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
+// const cookieSession = require('cookie-session');
 var logger = require('morgan');
 var rfs = require('rotating-file-stream');
 
 var indexRouter = require('./routes/index');
 var newsRouter = require('./routes/news');
+var usersRouter = require('./routes/users');
 
 // create a rotating write stream
 var accessLogStream = rfs('access.log', {
@@ -25,14 +32,33 @@ if (app.get('env') === 'development') {
   app.use(logger('dev'));
 }
 
+require('./configs/passport')(passport); //setup password
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser('keyboard cat'));
+// app.use(cookieSession({ secret: 'secret' }));
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'keyboard cat',
+  cookie: { maxAge: 60000 }
+}));
+// use passport session
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+app.use(function(req, res, next) {
+  res.locals.req = req;
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/news', newsRouter);
-
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
