@@ -1,0 +1,17 @@
+[
+    {
+        "title": "first news",
+        "body": "body1",
+        "date": "2019-01-26T14:45:16.519Z"
+    },
+    {
+        "title": "second news",
+        "body": "body2",
+        "date": "2019-01-26T14:45:24.857Z"
+    },
+    {
+        "title": "3rd news",
+        "body": "body3",
+        "date": "2019-01-26T14:47:21.546Z"
+    }
+]

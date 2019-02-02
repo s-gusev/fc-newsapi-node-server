@@ -32,7 +32,7 @@ require('./configs/passport')(passport); //setup password
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(cookieParser('keyboard cat'));
 // app.use(cookieSession({ secret: 'secret' }));
 app.use(session({
