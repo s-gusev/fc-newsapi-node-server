@@ -1,5 +1,3 @@
-require('./models/user.model');
-
 var createError = require('http-errors');
 var express = require('express');
 var session = require('express-session');
@@ -7,7 +5,6 @@ var passport = require('passport');
 var path = require('path');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
-// const cookieSession = require('cookie-session');
 var logger = require('morgan');
 var rfs = require('rotating-file-stream');
 
@@ -34,7 +31,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(cookieParser('keyboard cat'));
-// app.use(cookieSession({ secret: 'secret' }));
 app.use(session({
   resave: false,
   saveUninitialized: true,

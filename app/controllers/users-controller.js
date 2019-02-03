@@ -1,7 +1,4 @@
-'use strict';
-
-const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const { User } = require('../models/user.model');
 
 class UsersController {
     login(req, res, next) {
