@@ -1,0 +1,5 @@
+module.exports = {
+    fbClientId: 0,                 // fb app id
+    fbClientSecret: '',            // fb app secret key
+    jwtSecret: 'jwtSecretStr'      // any string
+}

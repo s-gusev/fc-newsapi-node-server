@@ -1,6 +1,7 @@
 // import { NewsRepository } from "../repository/news-repository";
 const express = require('express');
-var passport = require('passport');
+const passport = require('passport');
+const SecureConst = require('../configs/secure-consts');
 const router = express.Router();
 const { UsersController } = require('../controllers/users-controller');
 const usersController = new UsersController();
@@ -31,7 +32,7 @@ router.post('/api/login', function (req, res, next) {
                 res.send(err);
             }
             // generate a signed son web token with the contents of user object and return it in the response
-            const token = jwt.sign({ id: user.id }, 'jwtAuthSecret');
+            const token = jwt.sign({ id: user.id }, SecureConst.jwtSecret);
             return res.json({ token });
         });
     })(req, res);

@@ -5,7 +5,6 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('fc-newsapi-node-server:server');
 var http = require('http');
 var mongoose = require('mongoose');
 

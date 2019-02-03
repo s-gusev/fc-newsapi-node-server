@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const SecureConst = require('./secure-consts');
 
 // todo: move to config
 const localSettings = {
@@ -11,15 +12,15 @@ const localSettings = {
 }
 
 const fbSettings = {
-    clientID: 238496927059491,
-    clientSecret: 'bdff05dbbcb8a392f1726131b7d6f10c',
+    clientID: SecureConst.fbClientId,
+    clientSecret: SecureConst.fbClientSecret,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName']
 }
 
 const jwtSettings = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: "jwtAuthSecret",
+    secretOrKey: SecureConst.jwtSecret,
 }
 
 module.exports = function (passport) {
