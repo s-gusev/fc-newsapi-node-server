@@ -5,3 +5,5 @@
 3. Run 'npm run import' to import initial data to db server
 4. Run 'npm start' to start the http-server (http://localhost:3000)
 5. Use test.postman_collection for API testing using Postman
+
+Default test user is test/test123
