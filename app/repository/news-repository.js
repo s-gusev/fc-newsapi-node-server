@@ -10,7 +10,7 @@ class NewsRepository {
     }
 
     post(news) {
-        return news.save();
+        return News.update({ _id: news._id }, news, { upsert: true }).then(() => news);
     }
 
     delete(id) {
