@@ -27,6 +27,15 @@ if (app.get('env') === 'development') {
 
 require('./configs/passport')(passport); //setup password
 
+const cors = require('cors')
+
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
@@ -43,7 +52,7 @@ app.use(passport.session());
 
 app.use(flash());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.req = req;
   next();
 });
